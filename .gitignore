@@ -42,9 +42,23 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
-*.config.dart
+
+### VisualStudioCode ###
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.code-workspace
 
 lib/generated/l10n.dart
 lib/generated/intl/messages_all.dart
 lib/generated/intl/messages_en.dart
 windows/flutter/generated_plugins.cmake
+
+### CodeGen files
+*.config.dart
+*.g.dart
+*.gr.dart
+*.mocks.dart
+*.freezed.dart

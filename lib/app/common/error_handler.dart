@@ -4,7 +4,7 @@ import '../settings/state_observer.dart';
 
 @injectable
 class ErrorHandler {
-  Future<void> handleError(Object error, StackTrace stackTrace) async {
+  handleError(Object error, StackTrace stackTrace) {
     logger.d('Произошла ошибка ', error, stackTrace);
   }
 }

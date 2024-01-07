@@ -11,11 +11,15 @@ import 'app/settings/state_observer.dart';
 void main() {
   runZonedGuarded(
     () {
+      WidgetsFlutterBinding.ensureInitialized().deferFirstFrame();
+
       configureDependencies();
       Bloc.observer = StateObserver();
       Bloc.transformer = sequential();
-      runApp(const App());
+      runApp(App());
     },
-    (error, stack) {},
+    (error, stack) {
+      logger.e('Unhandled error catched by runZonedGuarded', error, stack);
+    },
   );
 }
