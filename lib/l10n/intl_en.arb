@@ -1,4 +1,6 @@
 {
     "email": "Email",
-    "password": "Пароль"
+    "password": "Пароль",
+    "invalidEmail": "Некорректный Email",
+    "requiredField": "Обязательное поле"
 }

@@ -20,13 +20,13 @@ class _InitPageState extends State<InitPage> {
       create: (context) => InitBloc(),
       child: BlocConsumer<InitBloc, InitState>(
         listener: (context, state) {
-          context.router.push(const AuthRoute());
-        },
-        builder: (context, state) {
-          return const Center(
-            child: CircularProgressIndicator(),
+          state.mapOrNull(
+            loaded: (value) => context.router.replace(const AuthRoute()),
           );
         },
+        builder: (context, state) => const Center(
+          child: CircularProgressIndicator(),
+        ),
       ),
     );
   }

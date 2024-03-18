@@ -7,7 +7,7 @@ import 'injection_container.dart';
 final Logger logger = Logger();
 
 class StateObserver extends BlocObserver {
-  final ErrorHandler _errorHandler = getIt();
+  final ErrorHandler _errorHandler = di.get<ErrorHandler>();
 
   @override
   void onChange(BlocBase bloc, Change change) {

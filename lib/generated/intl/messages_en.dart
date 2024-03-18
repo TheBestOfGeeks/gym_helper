@@ -23,6 +23,10 @@ class MessageLookup extends MessageLookupByLibrary {
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "email": MessageLookupByLibrary.simpleMessage("Email"),
-        "password": MessageLookupByLibrary.simpleMessage("Пароль")
+        "invalidEmail":
+            MessageLookupByLibrary.simpleMessage("Некорректный Email"),
+        "password": MessageLookupByLibrary.simpleMessage("Пароль"),
+        "requiredField":
+            MessageLookupByLibrary.simpleMessage("Обязательное поле")
       };
 }

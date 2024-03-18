@@ -1,5 +1,10 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gym_helper/app/settings/navigation/app_router.dart';
+
+import '../../app/settings/injection_container.dart';
+import '../auth/auth_bloc/auth_bloc.dart';
 
 @RoutePage()
 class NavigationPage extends StatelessWidget {
@@ -7,32 +12,38 @@ class NavigationPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AutoTabsScaffold(
-      routes: const [],
-      bottomNavigationBuilder: (context, tabsRouter) {
-        return BottomNavigationBar(
-          items: [
-            BottomNavigationBarItem(
-              label: 'Календарь',
-              icon: Container(
-                child: const Icon(Icons.calendar_month),
-              ),
-            ),
-            BottomNavigationBarItem(
-              label: 'Календарь',
-              icon: Container(
-                child: const Icon(Icons.calendar_month),
-              ),
-            ),
-            BottomNavigationBarItem(
-              label: 'Календарь',
-              icon: Container(
-                child: const Icon(Icons.calendar_month),
-              ),
-            ),
+    return PopScope(
+      canPop: false,
+      child: BlocProvider.value(
+        value: di.get<AuthBloc>(),
+        child: AutoTabsScaffold(
+          routes: const [
+            CalendarRoute(),
+            CalendarRoute(),
+            SettingsRoute(),
           ],
-        );
-      },
+          bottomNavigationBuilder: (context, tabsRouter) {
+            return BottomNavigationBar(
+              currentIndex: tabsRouter.activeIndex,
+              onTap: tabsRouter.setActiveIndex,
+              items: const [
+                BottomNavigationBarItem(
+                  label: 'Календарь',
+                  icon: Icon(Icons.calendar_month),
+                ),
+                BottomNavigationBarItem(
+                  label: 'Тренировка',
+                  icon: Icon(Icons.calendar_month),
+                ),
+                BottomNavigationBarItem(
+                  label: 'Настройки',
+                  icon: Icon(Icons.calendar_month),
+                ),
+              ],
+            );
+          },
+        ),
+      ),
     );
   }
 }
