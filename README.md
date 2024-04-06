@@ -1,16 +1,8 @@
 # gym_helper
 
-A new Flutter project.
+Задумка проекта реализовать кросплатформенный дневник тренировок с возможностью авторизации и хранения данных и истории в облаке.
 
-## Getting Started
+Текущий стэк:
+Стэйт менеджер - Bloc, роутинг через пакет Auto Route, авторизация через FireBase, хранение данных в FireStore.
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+В ппроекте предусмотрена локализация, смена темы.
