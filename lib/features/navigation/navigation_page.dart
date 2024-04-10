@@ -1,10 +1,11 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gym_helper/app/common/helpers.dart';
 import 'package:gym_helper/app/settings/navigation/app_router.dart';
 
-import '../../app/settings/injection_container.dart';
-import '../auth/auth_bloc/auth_bloc.dart';
+import '../../app/settings/service_locator.dart';
 
 @RoutePage()
 class NavigationPage extends StatelessWidget {
@@ -15,29 +16,37 @@ class NavigationPage extends StatelessWidget {
     return PopScope(
       canPop: false,
       child: BlocProvider.value(
-        value: di.get<AuthBloc>(),
+        value: ServiceLocator.authBloc,
         child: AutoTabsScaffold(
           routes: const [
             CalendarRoute(),
-            CalendarRoute(),
+            WorkoutsRoute(),
             SettingsRoute(),
           ],
           bottomNavigationBuilder: (context, tabsRouter) {
-            return BottomNavigationBar(
+            return CupertinoTabBar(
               currentIndex: tabsRouter.activeIndex,
-              onTap: tabsRouter.setActiveIndex,
-              items: const [
+              onTap: (tapIndex) {
+                if (tabsRouter.activeIndex == tapIndex) {
+                  context.router.navigateNamed(
+                    context.router.childControllers.first.current.path,
+                  );
+                }
+                tabsRouter.setActiveIndex(tapIndex);
+              },
+              backgroundColor: Colors.transparent,
+              items: [
                 BottomNavigationBarItem(
-                  label: 'Календарь',
-                  icon: Icon(Icons.calendar_month),
+                  label: context.l10n.calendar,
+                  icon: const Icon(Icons.calendar_month),
                 ),
                 BottomNavigationBarItem(
-                  label: 'Тренировка',
-                  icon: Icon(Icons.calendar_month),
+                  label: context.l10n.workouts,
+                  icon: const Icon(Icons.calendar_month),
                 ),
                 BottomNavigationBarItem(
-                  label: 'Настройки',
-                  icon: Icon(Icons.calendar_month),
+                  label: context.l10n.settings,
+                  icon: const Icon(Icons.calendar_month),
                 ),
               ],
             );

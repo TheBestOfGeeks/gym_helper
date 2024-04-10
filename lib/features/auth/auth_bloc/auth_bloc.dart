@@ -22,8 +22,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         await event.map<Future<void>>(
           signIn: (event) async => await _onSingIn(event, emit),
           sign: (event) async => _onSinged(emit),
-          signOut: (event) async => _onSingOut(emit),
-          initialization: (event) async => _onInitialization(),
+          signOut: (event) async => await _onSingOut(emit),
+          initialization: (event) async => await _onInitialization(),
         );
       },
       transformer: droppable(),
@@ -37,19 +37,24 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     ));
   }
 
-  void _onSingOut(Emitter<AuthState> emitter) {
-    iAuthRepo.singOut();
-    emitter(const AuthState.unAutenticaticated(
-      authStatus: AuthStatus.notAuthorized,
-    ));
+  Future<void> _onSingOut(Emitter<AuthState> emitter) async {
+    try {
+      await iAuthRepo.singOut();
+    } catch (e, s) {
+      Error.throwWithStackTrace(e, s);
+    } finally {
+      emitter(const AuthState.unAutenticaticated());
+    }
   }
 
   Future<void> _onSingIn(_SignIn event, Emitter<AuthState> emit) async {
     emit(const AuthState.loading(authStatus: AuthStatus.notAuthorized));
     try {
-      await iAuthRepo.signIn(event.email, event.password);
-      add(const AuthEvent.sign());
-    } catch (e) {
+      final isSuccessAuth = await iAuthRepo.signIn(event.email, event.password);
+      if (isSuccessAuth) {
+        add(const AuthEvent.sign());
+      }
+    } catch (e, s) {
       emit(const AuthState.loading(authStatus: AuthStatus.notAuthorized));
       if (e is FirebaseAuthException) {
         final errorCode = e.code;
@@ -73,27 +78,25 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           authStatus: AuthStatus.notAuthorized,
         ));
       }
-
-      addError(e);
+      addError(e, s);
     }
   }
 
-  void _onInitialization() async {
-    bool isRefreshTokenExpired = false;
+  Future<void> _onInitialization() async {
+    bool refreshTokenExpired = false;
     iAuthRepo.authStateChanges.asyncMap((user) async {
       final userData = user as User?;
       if (userData != null) {
-        isRefreshTokenExpired =
+        refreshTokenExpired =
             await iAuthRepo.needRefreshToken(userData.refreshToken ?? '');
       }
 
       return userData;
     }).listen((user) {
-      if (user == null &&
-          (isRefreshTokenExpired ||
-              state.getAuthStatus == AuthStatus.authorized)) {
+      if ((user == null || refreshTokenExpired) &&
+          state.getAuthStatus == AuthStatus.authorized) {
         add(const AuthEvent.signOut());
-      } else if (user != null && !isRefreshTokenExpired) {
+      } else if (user != null && !refreshTokenExpired) {
         add(const AuthEvent.sign());
       }
     });
@@ -117,7 +120,7 @@ class AuthState with _$AuthState {
 
   AuthStatus get getAuthStatus => map<AuthStatus>(
         autenticaticated: (state) => state.authStatus,
-        unAutenticaticated: (state) => state.authStatus,
+        unAutenticaticated: (state) => AuthStatus.notAuthorized,
         initial: (state) => state.authStatus,
         error: (state) => state.authStatus,
         loading: (state) => state.authStatus,
@@ -132,9 +135,7 @@ class AuthState with _$AuthState {
   const factory AuthState.autenticaticated({
     required AuthStatus authStatus,
   }) = _Autenticaticated;
-  const factory AuthState.unAutenticaticated({
-    required AuthStatus authStatus,
-  }) = _UnAutenticaticated;
+  const factory AuthState.unAutenticaticated() = _UnAutenticaticated;
   const factory AuthState.error({
     required String error,
     required AuthStatus authStatus,

@@ -6,12 +6,12 @@ part 'init_bloc.freezed.dart';
 class InitBloc extends Bloc<InitEvent, InitState> {
   InitBloc() : super(const _Loading()) {
     on<InitEvent>((InitEvent event, Emitter<InitState> emit) async {
-      await event.map(initialization: (event) => _initialization(event, emit));
+      await event.map(initialization: (event) => _initialization(emit));
     });
     add(const InitEvent.initialization());
   }
 
-  _initialization(_Initialization event, Emitter<InitState> emit) {
+  _initialization(Emitter<InitState> emit) {
     WidgetsFlutterBinding.ensureInitialized().allowFirstFrame();
     emit(const InitState.loaded());
   }

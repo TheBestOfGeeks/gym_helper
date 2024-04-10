@@ -1,8 +1,11 @@
+import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:auto_route/auto_route.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gym_helper/app/common/theme_manager/theme_manager.dart';
 
-import '../../../app/settings/injection_container.dart';
+import '../../../app/settings/service_locator.dart';
 import '../../../domain/auth_repo/firebase_auth_repo.dart';
 import '../../auth/auth_bloc/auth_bloc.dart';
 
@@ -10,11 +13,12 @@ import '../../auth/auth_bloc/auth_bloc.dart';
 class SettingsPage extends StatelessWidget {
   const SettingsPage({Key? key}) : super(key: key);
 
-  FirebaseAuthRepo get _authRepo => di.get<FirebaseAuthRepo>();
+  FirebaseAuthRepo get _authRepo => ServiceLocator.firebaseAuthRepo;
 
   @override
   Widget build(BuildContext context) {
-    final test = _authRepo.currentUserUid?.refreshToken;
+    final test = _authRepo.currentUser?.refreshToken;
+    final isLightTheme = context.adaptiveTheme.mode == AdaptiveThemeMode.light;
 
     return Scaffold(
       appBar: AppBar(
@@ -24,6 +28,16 @@ class SettingsPage extends StatelessWidget {
       body: Column(
         children: [
           Text('$test'),
+          CupertinoSwitch(
+            value: isLightTheme ? false : true,
+            onChanged: (value) {
+              if (isLightTheme) {
+                context.adaptiveTheme.setDark();
+              } else {
+                context.adaptiveTheme.setLight();
+              }
+            },
+          ),
           ElevatedButton(
             child: const Text('Logout'),
             onPressed: () {

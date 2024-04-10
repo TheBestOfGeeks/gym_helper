@@ -35,7 +35,7 @@ dependencies:
   #firebase
   firebase_core: ^2.24.2
   firebase_auth: ^4.16.0
-  cloud_firestore: ^4.15.9
+  cloud_firestore: ^4.14.0
 
   #arch
   flutter_bloc: ^8.1.3
@@ -54,12 +54,15 @@ dependencies:
   form_builder_validators: ^9.1.0
   bot_toast: ^4.1.3
   calendar_view: ^1.0.4
+  adaptive_theme: ^3.6.0
+  flutter_animate: ^4.5.0
 
   #navigation
   auto_route: ^7.8.4
   auto_route_generator: ^7.3.2
 
   #utils
+  uuid: ^3.0.7
   logger: ^1.4.0
 
   flutter_localizations:
@@ -94,10 +97,11 @@ flutter:
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
+  generate: true
   uses-material-design: true
   # To add assets to your application, add an assets section, like this:
-  # assets:
-  #   - images/a_dot_burr.jpeg
+  assets:
+    - assets/images/
   #   - images/a_dot_ham.jpeg
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

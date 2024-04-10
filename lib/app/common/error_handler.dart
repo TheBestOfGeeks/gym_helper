@@ -1,7 +1,8 @@
 import '../settings/state_observer.dart';
 
 class ErrorHandler {
-  handleError(Object error, StackTrace stackTrace) {
-    logger.d('Произошла ошибка ', error, stackTrace);
+  const ErrorHandler();
+  void handleError(Object error, StackTrace stackTrace) {
+    logger.e('Произошла ошибка ', error, stackTrace);
   }
 }

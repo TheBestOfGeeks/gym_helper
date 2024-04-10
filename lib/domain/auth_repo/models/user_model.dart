@@ -8,4 +8,10 @@ final class UserModel {
     required this.email,
     required this.refreshToken,
   });
+
+  Map<String, dynamic> toMap() => <String, dynamic>{
+        'uid': uid,
+        'email': email,
+        'refreshToken': refreshToken,
+      };
 }

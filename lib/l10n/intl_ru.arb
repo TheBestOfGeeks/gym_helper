@@ -1,4 +1,12 @@
 {
     "email": "Email",
-    "password": "Пароль"
+    "password": "Пароль",
+    "workoutName": "Название тренировки",
+    "workoutDescription": "Описание",
+    "invalidEmail": "Некорректный Email",
+    "requiredField": "Обязательное поле",
+    "calendar": "Календарь",
+    "workouts": "Тренировки",
+    "settings": "Настройки",
+    "login": "Войти"
 }

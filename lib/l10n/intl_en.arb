@@ -1,6 +1,12 @@
 {
     "email": "Email",
-    "password": "Пароль",
-    "invalidEmail": "Некорректный Email",
-    "requiredField": "Обязательное поле"
+    "password": "Password",
+    "invalidEmail": "Invalid Email",
+    "workoutName": "workout name",
+    "workoutDescription": "description",
+    "requiredField": "Required field",
+    "calendar": "Calendar",
+    "workouts": "Workouts",
+    "settings": "Settings",
+    "login": "Login"
 }
