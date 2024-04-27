@@ -1,12 +1,12 @@
 import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 
-showToast({required BuildContext context, required String errorMessage}) {
-  final systemTopBar = MediaQuery.of(context).padding.top;
+void showToast({required BuildContext context, required String errorMessage}) {
+  final double systemTopBar = MediaQuery.of(context).padding.top;
 
   BotToast.cleanAll();
   BotToast.showAnimationWidget(
-    toastBuilder: (cancelFunc) {
+    toastBuilder: (Function cancelFunc) {
       return Container(
         alignment: Alignment.bottomCenter,
         padding: const EdgeInsets.only(bottom: 20),
@@ -15,7 +15,7 @@ showToast({required BuildContext context, required String errorMessage}) {
         color: const Color(0xffE94551),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.end,
-          children: [
+          children: <Widget>[
             Text(
               errorMessage,
             ),
@@ -23,7 +23,8 @@ showToast({required BuildContext context, required String errorMessage}) {
         ),
       );
     },
-    wrapToastAnimation: (controller, cancelFunc, widget) {
+    wrapToastAnimation:
+        (AnimationController controller, Function cancelFunc, Widget widget) {
       return AnimatedBuilder(
         animation: controller,
         builder: (BuildContext context, Widget? child) {

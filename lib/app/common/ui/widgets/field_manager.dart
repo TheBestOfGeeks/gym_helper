@@ -1,4 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
@@ -15,6 +14,7 @@ class FieldManager {
   final TextInputType _keyboarType;
   final List<String? Function(String?)>? _validators;
   final bool _isRequired;
+  final bool _obscureText;
   final String _requiredErrorText;
   final Function(String?)? _onChanged;
 
@@ -25,6 +25,7 @@ class FieldManager {
     Decoration decoration = Decoration.standart,
     AutovalidateMode autovalidateMode = AutovalidateMode.onUserInteraction,
     TextInputType keyboarType = TextInputType.text,
+    bool hideInputText = false,
     List<String? Function(String?)>? validators,
     bool isRequired = false,
     Function(String?)? onChanged,
@@ -38,23 +39,26 @@ class FieldManager {
         _fieldName = fieldName,
         _onChanged = onChanged,
         _requiredErrorText = requiredErrorText ?? context.l10n.requiredField,
-        _context = context;
+        _context = context,
+        _obscureText = hideInputText;
 
   FormBuilderTextField buildField() {
     return FormBuilderTextField(
       name: _fieldName,
       autovalidateMode: _autovalidateMode,
       keyboardType: _keyboarType,
-      onTapOutside: (event) => FocusScope.of(_context).unfocus(),
+      obscureText: _obscureText,
+      onTapOutside: (PointerDownEvent event) =>
+          FocusScope.of(_context).unfocus(),
       onChanged: _onChanged,
       decoration: switch (_decoration) {
         Decoration.standart => standartDecoration(),
       },
       validator: FormBuilderValidators.compose(
-        [
+        <FormFieldValidator<String>>[
           _isRequired
               ? FormBuilderValidators.required(errorText: _requiredErrorText)
-              : (val) => null,
+              : (String? val) => null,
           ...?_validators,
         ],
       ),

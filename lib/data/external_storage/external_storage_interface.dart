@@ -8,4 +8,8 @@ abstract interface class IExternalStorage {
     WorkoutModel workoutModel,
     UserModel currentUser,
   );
+
+  Future<List<Map<String, dynamic>>> getWorkouts(
+    UserModel currentUser,
+  );
 }

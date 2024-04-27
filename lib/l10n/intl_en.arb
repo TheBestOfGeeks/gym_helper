@@ -8,5 +8,6 @@
     "calendar": "Calendar",
     "workouts": "Workouts",
     "settings": "Settings",
-    "login": "Login"
+    "login": "Login",
+    "createWorkout": "Create workout"
 }

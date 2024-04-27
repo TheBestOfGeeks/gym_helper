@@ -5,12 +5,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:gym_helper/app/common/helpers.dart';
-import '../../../app/common/widgets/basic_button.dart';
-import '../../../app/common/widgets/field_manager.dart';
-import '../../../app/common/widgets/loading_overlay.dart';
-import '../../../app/common/widgets/toast.dart';
-import '../../../app/settings/service_locator.dart';
+
+import '../../../app/common/ui/widgets/basic_button.dart';
+import '../../../app/common/ui/widgets/field_manager.dart';
+import '../../../app/common/ui/widgets/loading_overlay.dart';
+import '../../../app/common/ui/widgets/toast.dart';
 import '../../../app/settings/navigation/app_router.dart';
+import '../../../app/settings/service_locator.dart';
 import '../auth_bloc/auth_bloc.dart';
 
 const String emailFieldName = 'email';
@@ -92,8 +93,9 @@ class _AuthPageState extends State<AuthPage> {
                             context: context,
                             fieldName: passwordFieldName,
                             labeltext: context.l10n.password,
-                            keyboarType: TextInputType.emailAddress,
+                            keyboarType: TextInputType.text,
                             isRequired: true,
+                            hideInputText: true,
                           ).buildField(),
                         ).animate().slideX(begin: 5, duration: 1200.ms),
                         const SizedBox(height: 24),

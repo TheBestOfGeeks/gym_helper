@@ -1,3 +1,8 @@
 {
-    "dart.flutterSdkPath": "/Users/alexander/Mac/Dev/flutter 3.3.10"
+    "dart.flutterSdkPath": "/Users/alexander/Mac/Dev/flutter 3.3.10",
+    "editor.codeActionsOnSave": {
+        "source.organizeImports": "always",
+        "dart.format": "always",
+        "source.fixAll": "always",
+    }
 }

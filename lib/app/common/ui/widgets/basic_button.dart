@@ -1,28 +1,32 @@
 import 'package:flutter/material.dart';
+import 'package:gym_helper/app/common/ui/theme_manager/theme_manager.dart';
 
 class BasicButton extends StatelessWidget {
   const BasicButton({
     Key? key,
     required this.text,
+    this.elevation = 10,
     required this.onTap,
   }) : super(key: key);
 
   final String text;
+  final double elevation;
   final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
     final borderRadius = BorderRadius.circular(20);
+    final buttonColor = context.colorScheme.mainRedColor;
 
     return Material(
       borderRadius: borderRadius,
-      elevation: 10,
-      shadowColor: Colors.pink,
+      elevation: elevation,
+      shadowColor: buttonColor,
       color: Colors.orange,
       child: InkWell(
         onTap: onTap,
         borderRadius: borderRadius,
-        highlightColor: Colors.pinkAccent,
+        highlightColor: buttonColor,
         splashFactory: NoSplash.splashFactory,
         child: Container(
           decoration: BoxDecoration(
@@ -38,7 +42,7 @@ class BasicButton extends StatelessWidget {
             gradient: LinearGradient(
               colors: [
                 Colors.black.withBlue(50),
-                Colors.redAccent,
+                buttonColor,
               ],
               begin: Alignment.bottomLeft,
               end: Alignment.topRight,

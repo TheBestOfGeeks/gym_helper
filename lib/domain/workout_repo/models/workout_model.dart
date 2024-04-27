@@ -29,4 +29,15 @@ class WorkoutModel {
       'endTime': endTime,
     };
   }
+
+  factory WorkoutModel.fromMap(Map<String, dynamic> map) {
+    return WorkoutModel(
+      id: map['id'] as String,
+      name: map['name'] as String,
+      description: map['description'] as String?,
+      date: map['date'] as DateTime?,
+      startTime: map['startTime'] as DateTime?,
+      endTime: map['endTime'] as DateTime?,
+    );
+  }
 }

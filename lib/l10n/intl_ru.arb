@@ -8,5 +8,6 @@
     "calendar": "Календарь",
     "workouts": "Тренировки",
     "settings": "Настройки",
-    "login": "Войти"
+    "login": "Войти",
+    "createWorkout": "Создать тренировку"
 }

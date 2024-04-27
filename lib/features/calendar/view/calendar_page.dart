@@ -2,6 +2,8 @@ import 'package:auto_route/auto_route.dart';
 import 'package:calendar_view/calendar_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gym_helper/app/common/ui/widgets/app_bar_manager.dart';
+
 import '../../../app/settings/service_locator.dart';
 import '../bloc/calendar_bloc.dart';
 
@@ -30,18 +32,25 @@ class _CalendarPageState extends State<CalendarPage> {
         create: (context) =>
             CalendarBloc(workoutRepo: ServiceLocator.workoutRepo),
         child: Scaffold(
-          body: MonthView(
-            showBorder: true,
-            borderSize: 0,
-            useAvailableVerticalSpace: true,
-            weekDayBuilder: weekDayConverter,
-            onCellTap: (events, date) {
-              CalendarEventData event = CalendarEventData(
-                date: date,
-                title: 'Test',
-              );
-              calendarController.add(event);
-            },
+          body: CustomScrollView(
+            slivers: [
+              AppBarManager.getSliverAppBar(context, backButton: false),
+              SliverFillRemaining(
+                child: MonthView(
+                  showBorder: true,
+                  borderSize: 0,
+                  useAvailableVerticalSpace: true,
+                  weekDayBuilder: weekDayConverter,
+                  onCellTap: (events, date) {
+                    CalendarEventData event = CalendarEventData(
+                      date: date,
+                      title: 'Test',
+                    );
+                    calendarController.add(event);
+                  },
+                ),
+              ),
+            ],
           ),
         ),
       ),

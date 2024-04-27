@@ -1,9 +1,9 @@
 import 'package:gym_helper/domain/auth_repo/models/user_model.dart';
 
-abstract interface class IAuthRepo {
+abstract interface class IAuthRepo<T> {
   UserModel? get currentUser;
 
-  Stream get authStateChanges;
+  Stream<T> get authStateChanges;
 
   Future<bool> needRefreshToken(String newRefreshToken);
 

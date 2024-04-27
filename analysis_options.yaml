@@ -22,6 +22,48 @@ linter:
   # `// ignore_for_file: name_of_lint` syntax on the line or in the file
   # producing the lint.
   rules:
+    - await_only_futures
+    - avoid_annotating_with_dynamic
+    - avoid_positional_boolean_parameters
+    - avoid_relative_lib_imports
+    - avoid_returning_null_for_future
+    - avoid_returning_null_for_void
+    - avoid_slow_async_io
+    - always_declare_return_types
+    - cancel_subscriptions
+    - empty_statements
+    - no_logic_in_create_state
+    - throw_in_finally
+    - unnecessary_statements
+    - use_build_context_synchronously
+    - avoid_void_async
+    - avoid_unused_constructor_parameters
+    - empty_catches
+    - always_specify_types
+    - close_sinks
+    - valid_regexps
+    - combinators_ordering
+    - comment_references
+    - invalid_case_patterns
+    - library_annotations
+    - one_member_abstracts
+    - only_throw_errors
+    - missing_whitespace_between_adjacent_strings
+    - null_check_on_nullable_type_parameter
+    - prefer_const_declarations
+    - prefer_contains
+    - prefer_final_fields
+    - prefer_final_in_for_each
+    - sized_box_shrink_expand
+    - unawaited_futures
+    - unnecessary_await_in_return
+    - unnecessary_late
+    - unnecessary_getters_setters
+    - prefer_final_locals
+    - prefer_foreach
+    - prefer_if_null_operators
+    - unnecessary_constructor_name
+
     # avoid_print: false  # Uncomment to disable the `avoid_print` rule
     # prefer_single_quotes: true  # Uncomment to enable the `prefer_single_quotes` rule
 
@@ -55,7 +97,7 @@ dart_code_metrics:
     - prefer-conditional-expressions
     - no-equal-then-else
     - prefer-moving-to-variable
-   # - prefer-match-file-name
+    # - prefer-match-file-name
   rules-exclude:
     - lib/generated/intl/messages_all.dart
     - lib/generated/intl/messages_en.dart

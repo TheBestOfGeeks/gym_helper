@@ -7,7 +7,7 @@ import 'models/user_model.dart';
 
 const String _refreshTokenKey = 'refresh_token';
 
-class FirebaseAuthRepo implements IAuthRepo {
+class FirebaseAuthRepo implements IAuthRepo<User?> {
   late final FirebaseAuth _firebaseAuth;
   late final ILocalStorage _localStorage;
   late final IExternalStorage _externalStorage;
@@ -23,8 +23,11 @@ class FirebaseAuthRepo implements IAuthRepo {
   }
 
   @override
+  Stream<User?> get authStateChanges => _firebaseAuth.authStateChanges();
+
+  @override
   UserModel? get currentUser {
-    final user = _firebaseAuth.currentUser;
+    final User? user = _firebaseAuth.currentUser;
     if (user == null) return null;
 
     return UserModel(
@@ -35,9 +38,6 @@ class FirebaseAuthRepo implements IAuthRepo {
   }
 
   @override
-  Stream<User?> get authStateChanges => _firebaseAuth.authStateChanges();
-
-  @override
   Future<bool> signIn(String email, String password) async {
     try {
       final UserCredential userCredential =
@@ -45,7 +45,7 @@ class FirebaseAuthRepo implements IAuthRepo {
         email: email,
         password: password,
       );
-      final currentUser = this.currentUser;
+      final UserModel? currentUser = this.currentUser;
       if (currentUser != null) {
         await _externalStorage.addUser(currentUser);
       } else {
@@ -87,7 +87,7 @@ class FirebaseAuthRepo implements IAuthRepo {
 
   @override
   Future<bool> needRefreshToken(String newRefreshToken) async {
-    final oldRefreshToken =
+    final String? oldRefreshToken =
         await _localStorage.getData<String>(_refreshTokenKey);
 
     return oldRefreshToken != newRefreshToken;
